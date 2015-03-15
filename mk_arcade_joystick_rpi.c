@@ -1,7 +1,8 @@
 /*
- *  Arcade Joystick Driver for RaspberryPi
+ *  GPIO Only Arcade Joystick Driver for RaspberryPi
  *
  *  Copyright (c) 2014 Matthieu Proucelle
+ *  Modified by Heinz Stampfli
  *
  *  Based on the gamecon driver by Vojtech Pavlik, and Markus Hiienkari
  */
@@ -39,10 +40,10 @@
 
 
 MODULE_AUTHOR("Matthieu Proucelle");
-MODULE_DESCRIPTION("GPIO and MCP23017 Arcade Joystick Driver");
+MODULE_DESCRIPTION("GPIO Only Arcade Joystick Driver");
 MODULE_LICENSE("GPL");
 
-#define MK_MAX_DEVICES		9
+#define MK_MAX_DEVICES		2
 
 #ifdef RPI2
 #define PERI_BASE        0x3F000000
@@ -64,47 +65,7 @@ MODULE_LICENSE("GPL");
 #define BSC1_BASE		(PERI_BASE + 0x804000)
 
 
-/*
- * MCP23017 Defines
- */
-#define MPC23017_GPIOA_MODE		0x00
-#define MPC23017_GPIOB_MODE		0x01
-#define MPC23017_GPIOA_PULLUPS_MODE	0x0c
-#define MPC23017_GPIOB_PULLUPS_MODE	0x0d
-#define MPC23017_GPIOA_READ             0x12
-#define MPC23017_GPIOB_READ             0x13
 
-/*
- * Defines for I2C peripheral (aka BSC, or Broadcom Serial Controller)
- */
-
-#define BSC1_C		*(bsc1 + 0x00)
-#define BSC1_S		*(bsc1 + 0x01)
-#define BSC1_DLEN	*(bsc1 + 0x02)
-#define BSC1_A		*(bsc1 + 0x03)
-#define BSC1_FIFO	*(bsc1 + 0x04)
-
-#define BSC_C_I2CEN	(1 << 15)
-#define BSC_C_INTR	(1 << 10)
-#define BSC_C_INTT	(1 << 9)
-#define BSC_C_INTD	(1 << 8)
-#define BSC_C_ST	(1 << 7)
-#define BSC_C_CLEAR	(1 << 4)
-#define BSC_C_READ	1
-
-#define START_READ	BSC_C_I2CEN|BSC_C_ST|BSC_C_CLEAR|BSC_C_READ
-#define START_WRITE	BSC_C_I2CEN|BSC_C_ST
-
-#define BSC_S_CLKT	(1 << 9)
-#define BSC_S_ERR	(1 << 8)
-#define BSC_S_RXF	(1 << 7)
-#define BSC_S_TXE	(1 << 6)
-#define BSC_S_RXD	(1 << 5)
-#define BSC_S_TXD	(1 << 4)
-#define BSC_S_RXR	(1 << 3)
-#define BSC_S_TXW	(1 << 2)
-#define BSC_S_DONE	(1 << 1)
-#define BSC_S_TA	1
 
 #define CLEAR_STATUS	BSC_S_CLKT|BSC_S_ERR|BSC_S_DONE
 
@@ -176,11 +137,11 @@ static const int mk_arcade_gpioa_maps[] = {0,  1,    2,    3,     4,     5      
 static const int mk_arcade_gpiob_maps[] = {0, 1, 2,  3, 4, 5 };
 
 static const short mk_arcade_gpio_btn[] = {
-    BTN_START, BTN_SELECT, BTN_A, BTN_B, BTN_TR, BTN_Y, BTN_X, BTN_TL
+    BTN_START, BTN_SELECT, BTN_A, BTN_B, BTN_TR, BTN_Y, BTN_X, BTN_TL, BTN_HOTKEY
 };
 
 static const char *mk_names[] = {
-    NULL, "GPIO Controller 1", "GPIO Controller 2", "MCP23017 Controller"
+    NULL, "GPIO Controller 1 13Btn", "GPIO Controller 2 13Btn", "MCP23017 Controller"
 };
 
 /* GPIO UTILS */
