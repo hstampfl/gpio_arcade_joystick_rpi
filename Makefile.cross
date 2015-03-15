@@ -1,6 +1,6 @@
 ifneq (${KERNELRELEASE},)
 
-	obj-m  = mk_arcade_joystick_rpi.o
+	obj-m  = gpio_arcade_joystick_rpi.o
 else
 	KERNELDIR        ?= /lib/modules/$(shell uname -r)/build
 	MODULE_DIR       ?= $(shell pwd)
@@ -8,7 +8,7 @@ else
 	CROSS_COMPILE    ?=
 	INSTALL_MOD_PATH ?= /
 	ifdef RPI2
-		CFLAGS_mk_arcade_joystick_rpi.o := -DRPI2
+		CFLAGS_gpio_arcade_joystick_rpi.o := -DRPI2
 	endif
 endif
 
