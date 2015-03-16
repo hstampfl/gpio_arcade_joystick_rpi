@@ -253,7 +253,6 @@ static int __init mk_setup_pad(struct mk *mk, int idx, int pad_type_arg) {
     }
 
     pad->type = pad_type;
-    pad->mcp23017addr = pad_type_arg;
     snprintf(pad->phys, sizeof (pad->phys),
             "input%d", idx);
 
