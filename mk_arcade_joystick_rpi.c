@@ -63,8 +63,6 @@ MODULE_LICENSE("GPL");
 #define GPIO_CLR *(gpio+10)
 
 
-#define CLEAR_STATUS	BSC_S_CLKT|BSC_S_ERR|BSC_S_DONE
-
 static volatile unsigned *gpio;
 
 struct mk_config {
@@ -81,7 +79,6 @@ enum mk_type {
     MK_NONE = 0,
     MK_ARCADE_GPIO,
     MK_ARCADE_GPIO_BPLUS,
-    MK_ARCADE_MCP23017,
     MK_MAX
 };
 
@@ -370,16 +367,12 @@ static int __init mk_init(void) {
         pr_err("io remap failed\n");
         return -EBUSY;
     }
-    /* Set up i2c pointer for direct register access */
-    if ((bsc1 = ioremap(BSC1_BASE, 0xB0)) == NULL) {
-        pr_err("io remap failed\n");
-        return -EBUSY;
-    }
-    if (mk_cfg.nargs < 1) {
+
+    if (gpio_cfg.nargs < 1) {
         pr_err("at least one device must be specified\n");
         return -EINVAL;
     } else {
-        mk_base = mk_probe(mk_cfg.args, mk_cfg.nargs);
+        mk_base = mk_probe(gpio_cfg.args, gpio_cfg.nargs);
         if (IS_ERR(mk_base))
             return -ENODEV;
     }
@@ -391,7 +384,7 @@ static void __exit mk_exit(void) {
         mk_remove(mk_base);
 
     iounmap(gpio);
-    iounmap(bsc1);
+
 }
 
 module_init(mk_init);
