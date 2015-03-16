@@ -72,8 +72,8 @@ struct mk_config {
 
 static struct mk_config mk_cfg __initdata;
 
-module_param_array_named(Controller, gpio_cfg.args, int, &(gpio_cfg.nargs), 0);
-MODULE_PARM_DESC(Controller, "Enable or disable GPIO Arcade Joystick");
+module_param_array_named(controller, gpio_cfg.args, int, &(gpio_cfg.nargs), 0);
+MODULE_PARM_DESC(controller, "Enable or disable GPIO Arcade Joystick");
 
 enum mk_type {
     MK_NONE = 0,
@@ -88,7 +88,6 @@ struct mk_pad {
     struct input_dev *dev;
     enum mk_type type;
     char phys[32];
-    int mcp23017addr;
 };
 
 struct mk_nin_gpio {
@@ -259,7 +258,7 @@ static int __init mk_setup_pad(struct mk *mk, int idx, int pad_type_arg) {
     input_dev->name = mk_names[pad_type];
     input_dev->phys = pad->phys;
     input_dev->id.bustype = BUS_PARPORT;
-    input_dev->id.vendor = 0x0002;
+    input_dev->id.vendor = 0x0001;
     input_dev->id.product = pad_type;
     input_dev->id.version = 0x0001;
 
