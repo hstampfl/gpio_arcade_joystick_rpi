@@ -72,8 +72,8 @@ struct mk_config {
 
 static struct mk_config mk_cfg __initdata;
 
-module_param_array_named(controller, gpio_cfg.args, int, &(gpio_cfg.nargs), 0);
-MODULE_PARM_DESC(controller, "Enable or disable GPIO Arcade Joystick");
+module_param_array_named(map, gpio_cfg.args, int, &(gpio_cfg.nargs), 0);
+MODULE_PARM_DESC(map, "Enable or disable GPIO Arcade Joystick");
 
 enum mk_type {
     MK_NONE = 0,
