@@ -1,8 +1,8 @@
-# mk_arcade_joystick_rpi #
+# gpio_arcade_joystick_rpi #
 
-The Raspberry Pi GPIO Joystick Driver
+The Raspberry Pi GPIO Only Joystick Driver
 
-
+- - - -
 ## Introduction ##
 
 The RaspberryPi is an amazing tool I discovered a month ago. The RetroPie project made me want to build my own Arcade Cabinet with simple arcade buttons and joysticks.
